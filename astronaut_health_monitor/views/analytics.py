@@ -40,5 +40,15 @@ def render():
             )
             fig.update_traces(fill='tozeroy', fillcolor='rgba(6, 182, 212, 0.1)', line=dict(width=2))
             st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
+            
+            st.markdown("<br>", unsafe_allow_html=True)
+            csv = df.to_csv(index=False).encode('utf-8')
+            st.download_button(
+                label="⬇ EXPORT DATA TO CSV",
+                data=csv,
+                file_name=f'astronaut_telemetry_export.csv',
+                mime='text/csv',
+                use_container_width=True
+            )
         
         render_html("</div>")

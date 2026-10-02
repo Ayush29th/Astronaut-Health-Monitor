@@ -54,3 +54,24 @@ def render():
         render_html("</div><div class='mc-panel'>")
         st.plotly_chart(create_chart(df, 'respiratory_rate', 'RESPIRATORY RATE (BPM)', 5, 35, "#10b981"), use_container_width=True, config={'displayModeBar': False})
         render_html("</div>")
+
+    st.markdown("<br>", unsafe_allow_html=True)
+    render_html("<h2 style='color:var(--text-secondary); font-size:0.85rem; padding-left: 8px;'>// MEDICAL INTERVENTIONS</h2>")
+    
+    render_html("<div class='mc-panel'>")
+    col1, col2, col3 = st.columns(3)
+    
+    if 'engine' in st.session_state:
+        with col1:
+            if st.button("💉 Administer Oxygen", use_container_width=True):
+                st.session_state.engine.apply_intervention("Administer Oxygen")
+                st.toast("Oxygen administered. SpO2 increasing.", icon="💉")
+        with col2:
+            if st.button("💊 Administer Beta Blocker", use_container_width=True):
+                st.session_state.engine.apply_intervention("Administer Beta Blocker")
+                st.toast("Beta Blocker administered. Heart rate dropping.", icon="💊")
+        with col3:
+            if st.button("🧪 Administer Sedative", use_container_width=True):
+                st.session_state.engine.apply_intervention("Sedative / Calming Agent")
+                st.toast("Sedative administered. Stress levels dropping.", icon="🧪")
+    render_html("</div>")

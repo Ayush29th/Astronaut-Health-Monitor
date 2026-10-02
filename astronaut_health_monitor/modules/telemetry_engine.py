@@ -21,6 +21,17 @@ class TelemetryEngine:
             'activity': 5.0
         }
         
+    def apply_intervention(self, intervention_type):
+        if intervention_type == "Administer Oxygen":
+            self.state['spo2'] = min(100.0, self.state['spo2'] + 5.0)
+            self.state['respiratory_rate'] = max(12.0, self.state['respiratory_rate'] - 2.0)
+        elif intervention_type == "Administer Beta Blocker":
+            self.state['heart_rate'] = max(60.0, self.state['heart_rate'] - 15.0)
+            self.state['blood_pressure_sys'] = max(100.0, self.state['blood_pressure_sys'] - 10.0)
+        elif intervention_type == "Sedative / Calming Agent":
+            self.state['stress'] = max(10.0, self.state['stress'] - 30.0)
+            self.state['heart_rate'] = max(65.0, self.state['heart_rate'] - 10.0)
+        
     def generate_telemetry(self, scenario="Normal"):
         # Apply scenario effects dynamically over time
         if scenario == "High Fatigue":
